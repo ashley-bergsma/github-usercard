@@ -104,19 +104,30 @@ const profileLink = document.createElement('a');
 // make sure you APPEND THIS ISH 
 const userFollowers = document.createElement('p'); 
 const userFollows = document.createElement('p'); 
-const userBio = document.createElement('p')
+const userBio = document.createElement('p'); 
+const button = document.createElement('button'); 
+
+const contactCard = document.createElement('div'); 
+const userContact = document.createElement('p'); 
+const userRepos = document.createElement('p'); 
+const reposLink = document.createElement('a'); 
+const twitterHandle = document.createElement('p'); 
 
 // now we can add class names to the appropriate elements 
 card.classList.add('card'); 
 cardInfo.classList.add('card-info'); 
 userName.classList.add('name'); 
 userHandle.classList.add('username');
+button.classList.add('button');
+contactCard.classList.add('closed')
+userContact.classList.add('contact')
 // with the above done, we have to append the elements we've made to the parents 
 // append img to card
 card.appendChild(userImg); 
 // append card-info div to card div 
 card.appendChild(cardInfo); 
 // append the profile link to the paragraph 
+// NOTE: Needed to add the text content and append before the others - best practice: do the creating, adding classes/content and appending on one element at a time. 
 userProfile.textContent = 'Profile: '
 userProfile.appendChild(profileLink);
 // append all the items to the card info 
@@ -127,6 +138,15 @@ cardInfo.appendChild(userProfile);
 cardInfo.appendChild(userFollowers);
 cardInfo.appendChild(userFollows);
 cardInfo.appendChild(userBio);
+cardInfo.appendChild(button);
+cardInfo.appendChild(contactCard); 
+contactCard.appendChild(userContact); 
+contactCard.appendChild(userRepos); 
+userRepos.textContent = 'User\'s repos: ';
+userRepos.appendChild(reposLink); 
+twitterHandle.textContent = 'Twitter: ' + user.data.twitter_username; 
+
+contactCard.appendChild(twitterHandle);
 // testing, testing, is this thing on?
 // console.log(card)
 // adding content to the elements 
@@ -135,13 +155,26 @@ userName.textContent = user.data.name;
 userHandle.textContent = user.data.login; 
 userLocale.textContent = user.data.location; 
  // this is hardcoded to house the link
-profileLink.textContent = user.data.html_url; 
+profileLink.textContent = user.data.html_url;
+profileLink.setAttribute('href', user.data.html_url); 
 userFollowers.textContent = 'Followers: ' + user.data.followers; 
 userFollows.textContent = 'Following: ' + user.data.following; 
 userBio.textContent = 'Bio: ' + user.data.bio;
+button.textContent = 'More Info'; 
+userContact.textContent = 'Email: ' + user.data.email; 
+reposLink.textContent = 'Repos Link'; 
+reposLink.setAttribute('href', user.data.repos_url);
+
+button.addEventListener('click', () => {
+  contactCard.classList.toggle('closed')
+});
+
 // THOU MUST RETURN 
 return card
 }
+
+// add an event listener on the more info button to toggle the classname of closed, and reveal the information inside 
+b
 
 // cardMaker();
 /*
